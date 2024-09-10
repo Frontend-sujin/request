@@ -56,13 +56,82 @@ request.body; // ReadableStream
 
 # response
 
+```js
+new Reponse();
+new Response(body);
+new Response(body, options);
+```
+
+-  `body` 의 타입
+
+   -  null
+
+   -  Blob
+
+   -  FormData
+
+   -  URLSearchParams
+
+   -  String
+
 ## response.header
 
 ### Set-Cookie
 
-> HTTP 응답 헤더 중 하나
-
--  서버가 클라이언트에 쿠키를 설정할 때
-   사용된다.
+> HTTP 응답 헤더 중 하나로, 서버가 클라이언트에 쿠키를 설정할 때 사용된다.
 
 > 💡 쿠키 : 서버가 클라이언트의 브라우저에 저장하는 작은 데이터 조각으로, 이후 요청 시 클라이언트가 해당 쿠키를 서버로 전송하여 상태를 유지하거나 특정 정보를 전달하는 데 사용된다. 예를 들어, 로그인 상태를 유지하거나 사용자 환경을 맞춤화할 때 쿠키를 활용한다.
+
+<br />
+
+## response 가 갖는 편의 메서드들
+
+### `Response.json()`
+
+> `Response` 객체를 생성하면서, 본문(`body`)에 JSON 데이터를 포함하는 방식
+
+-  `Response` 객체의 본문(`body`)을 **JSON으로 파싱**하는 역할
+-  **Promise를 반환**함
+   => 본문을 읽고, JSON으로 변환하는 비동기 작업 수행
+
+-  예
+
+```js
+const jsonResponse = Response.json({
+   name: 'sujin',
+   age: 25,
+});
+```
+
+위 코드는 다음 코드와 동일하다.
+
+```js
+const jsonResponse = new Response(
+   JSON.stringify({ name: 'sujin', age: 25 }),
+   { headers: { 'Content-Type': 'application/json' } },
+);
+```
+
+<br />
+
+> 💡 `.json()`으로 반환된 `Response` 객체는 비동기적으로 처리되어야 하므로, <br />
+> 위 예제에서의 `jsonResponse` 의 `body` 값을 바로 확인할 수 없다.
+
+`body` 를 확인하기 위해서는 해당 `Response` 객체에서 `.json()` 메서드를 호출하여 `body`를 비동기적으로 읽어야 한다.
+
+-  예
+
+```js
+const jsonResponse = Response.json({
+   name: 'sujin',
+   age: 25,
+});
+
+// jsonResponse.json() 은 Promise 를 반환한다
+jsonResponse.json().then(data => {
+   console.log('jsonRepsonse body: ', data);
+});
+
+const data = await jsonResponse.json();
+console.log('jsonRepsonse body: ', data);
+```

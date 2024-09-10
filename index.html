@@ -9,6 +9,33 @@
       <title>Document</title>
    </head>
    <body>
+      <!-- defer -->
+      <p>...defer 스크립트 앞 콘텐츠...</p>
+      <!-- 지연 스크립트는 페이지 생성을 절대 막지 않습니다.
+      지연 스크립트는 DOM이 준비된 후에 실행되긴 하지만 DOMContentLoaded 이벤트 발생 전에 실행됩니다 -->
+      <script
+         defer
+         src="https://javascript.info/article/script-async-defer/long.js?speed=1"
+      ></script>
+      <p>...defer 스크립트 뒤 콘텐츠...</p>
+
+      <!-- async -->
+      <p>...async 스크립트 앞 콘텐츠...</p>
+      <script>
+         document.addEventListener('DOMContentLoaded', () =>
+            alert('DOM이 준비 되었습니다!'),
+         );
+      </script>
+      <script
+         async
+         src="https://javascript.info/article/script-async-defer/long.js"
+      ></script>
+      <script
+         async
+         src="https://javascript.info/article/script-async-defer/small.js"
+      ></script>
+      <p>...async 스크립트 뒤 콘텐츠...</p>
       <script src="./request.js"></script>
+      <script src="./response.js"></script>
    </body>
 </html>
