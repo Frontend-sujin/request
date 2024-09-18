@@ -52,3 +52,8 @@ Response.json({
 })
    .json()
    .then(data => console.log('data222: ', data));
+
+// response 객체의 text() 메서드: 객체의 본문을 텍스트 형식으로 읽어오며, 비동기적으로 작동하고 프로미스를 반환
+new Response('hi, guys') // 여기서 객체의 본문(body) === 'hi, guys'
+   .text()
+   .then(res => console.log('res: ', res));
